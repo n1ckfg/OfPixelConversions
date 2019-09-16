@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxZip.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
 	public:
 		void setup();
@@ -22,7 +22,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        ofImage origImg;
+        int width, height;
+        ofImage origImg, finalImg;
         ofFbo fbo;
         ofBuffer buffer;
         ofPixels pixels;

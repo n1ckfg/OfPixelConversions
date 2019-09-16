@@ -3,7 +3,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     origImg.load("test.jpg");
-    fbo.allocate(origImg.getWidth(), origImg.getHeight(), GL_RGB);
+    width = origImg.getWidth();
+    height = origImg.getHeight();
+    finalImg.allocate(width, height, OF_IMAGE_COLOR);
+    fbo.allocate(width, height, GL_RGB);
 }
 
 //--------------------------------------------------------------
@@ -15,9 +18,6 @@ void ofApp::update() {
     
     ofPixels pixels;
     fbo.readToPixels(pixels);
-    
-    int w = pixels.getWidth();
-    int h = pixels.getHeight();
     
     unsigned char pixelsRaw[pixels.size()];
     std::copy(pixels.begin(), pixels.end(), pixelsRaw);
@@ -35,10 +35,9 @@ void ofApp::update() {
 
     unsigned char newPixelsRaw[unZippedFile.size()];
     std::copy(unZippedFile.begin(), unZippedFile.end(), newPixelsRaw);
-    ofImage img;
-    img.allocate(w, h, OF_IMAGE_COLOR);
-    img.setFromPixels(newPixelsRaw, w, h, OF_IMAGE_COLOR);
-    ofSaveImage(img, buffer, OF_IMAGE_FORMAT_JPEG, OF_IMAGE_QUALITY_LOW);
+
+    finalImg.setFromPixels(newPixelsRaw, width, height, OF_IMAGE_COLOR);
+    ofSaveImage(finalImg, buffer, OF_IMAGE_FORMAT_JPEG, OF_IMAGE_QUALITY_LOW);
     origImg.load(buffer);
 }
 
